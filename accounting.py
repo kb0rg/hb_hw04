@@ -1,49 +1,36 @@
-melon_cost = 1.00
+"""
+refactor to read csv and check all customers 
+to see if any have underpaid
+"""
 
-customer1_name = "Joe"
-customer1_melons = 5
-customer1_paid = 5.00
+# set indices to use when reading data from .csv file
+CUST_NUMBER_INDEX = 0 
+CUST_NAME_INDEX = 1
+CUST_MELONS_INDEX = 2
+CUST_PAID_INDEX = 3
 
-customer2_name = "Frank"
-customer2_melons = 6
-customer2_paid = 6.00
+def check_payments():
 
-customer3_name = "Sally"
-customer3_melons = 3
-customer3_paid = 3.00
+	print "\n" * 5
+	print "checking orders and payments...."
+	print
 
-customer4_name = "Sean"
-customer4_melons = 9
-customer4_paid = 9.50
+	customer_orders_file = open("customer_orders.csv")
 
-customer5_name = "David"
-customer5_melons = 4
-customer5_paid = 4.00
+	melon_cost = 1.00
 
-customer6_name = "Ashley"
-customer6_melons = 3
-customer6_paid = 2.00
+	for line in customer_orders_file:
 
-customer1_expected = customer1_melons * melon_cost
-if customer1_expected != customer1_paid:
-    print customer1_name, "paid %.2f, expected %.2f"%(customer1_paid, customer1_expected)
+		dataList = line.split(",")
+		cust_number, cust_name, cust_melons, cust_paid = dataList
+		cust_expected = float(cust_melons) * melon_cost
 
-customer2_expected = customer2_melons * melon_cost
-if customer2_expected != customer2_paid:
-    print customer2_name, "paid %.2f, expected %.2f"%(customer2_paid, customer2_expected)
+		if cust_expected != float(cust_paid):
+			print cust_name, "paid %.2f, expected %.2f"%(float(cust_paid), cust_expected)
 
-customer3_expected = customer3_melons * melon_cost
-if customer3_expected != customer3_paid:
-    print customer3_name, "paid %.2f, expected %.2f"%(customer3_paid, customer3_expected)
+	customer_orders_file.close()
+	print "." * 80
+	print "Done checking this batch of orders and payments!"
+	print "\n" * 3
 
-customer4_expected = customer4_melons * melon_cost
-if customer4_expected != customer4_paid:
-    print customer4_name, "paid %.2f, expected %.2f"%(customer4_paid, customer4_expected)
-
-customer5_expected = customer5_melons * melon_cost
-if customer5_expected != customer5_paid:
-    print customer5_name, "paid %.2f, expected %.2f"%(customer5_paid, customer5_expected)
-
-customer6_expected = customer6_melons * melon_cost
-if customer6_expected != customer6_paid:
-    print customer6_name, "paid %.2f, expected %.2f"%(customer6_paid, customer6_expected)
+check_payments()
